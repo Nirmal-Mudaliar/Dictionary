@@ -4,16 +4,22 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dictionary.feature_dictionary.presentation.WordInfoItem
 import com.example.dictionary.feature_dictionary.presentation.WordInfoViewModel
@@ -54,9 +60,11 @@ class MainActivity : ComponentActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(16.dp)
+                                .padding(16.dp),
+
+
                         ) {
-                            TextField(
+                            OutlinedTextField(
                                 value = viewModel.searchQuery.value,
                                 onValueChange = viewModel::onSearch,
                                 modifier = Modifier.fillMaxWidth(),
@@ -64,7 +72,17 @@ class MainActivity : ComponentActivity() {
                                     Text(text = "Search...")
                                 }
                             )
+                            
                             Spacer(modifier = Modifier.height(16.dp))
+                            if (viewModel.searchQuery.value.isBlank()) {
+                                Text(text = "Try Search something!",
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+
+                                    fontSize = 22.sp,
+                                    fontWeight = FontWeight.Bold
+                                    )
+                            }
                             LazyColumn(
                                 modifier = Modifier.fillMaxSize()
                             ) {
